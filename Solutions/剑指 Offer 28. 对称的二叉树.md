@@ -13,16 +13,35 @@
 
 
 
-
-
-
-
-
-
-**尚未完成，逻辑错误，GG**
-
 ```C++
 /**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        int flag = 1;
+        if(!root) return 1;
+        visit(root->left, root->right, flag);
+        return flag;
+    }
+    void visit(TreeNode* l, TreeNode* r, int & flag){
+        if(flag == 0) return;
+        if((!l && r )||(!r && l)) flag = 0;
+        if(!l) return;
+        if(!r) return;
+        visit(l->left, r->right, flag);
+        if(l->val != r->val) flag = 0;
+        if(l == r) return;
+        visit(l->right, r->left, flag);
+    }
+};/**
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;

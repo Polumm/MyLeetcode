@@ -1,9 +1,11 @@
-[二叉搜索树的第k大节点](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/)
+## [二叉搜索树的第k大节点](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/)
 
 
 给定一棵二叉搜索树，请找出其中第k大的节点。
 
- 
+ **递归回溯判断flag，一定要引用传参！！！**
+
+
 
 **示例 1:**
 
@@ -65,7 +67,7 @@ public:
 };
 ```
 
-**第二种方法待续，逻辑错误，GG**
+**第二种方法**
 
 ```c++
 /**
@@ -79,19 +81,20 @@ public:
  */
 class Solution {
 public:
-    int kthLargest(TreeNode* root, int k) {
+    int kthLargest(TreeNode* root, int & k) {//陷阱！k一定要引用传参，不然会错！！！
         int m;
         inorder(root, k, m);
         return m;
     }
-    void inorder(TreeNode* root, int k, int & m){
+    void inorder(TreeNode* root, int & k, int & m){
         if(!root) return ;//又忘写边界条件了
-        inorder(root->left, k, m);
-        if(k = 1) m = root->val;
-        k--;
         inorder(root->right, k, m);
+        if(!--k) {
+            m = root->val;
+            return;
+        }
+        inorder(root->left, k, m);
     }
 };
-
 ```
 
